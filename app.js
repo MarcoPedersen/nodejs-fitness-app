@@ -62,8 +62,8 @@ app.use(instructorRoute);
 app.use(memberRoute);
 app.use(adminRoute);
 
-const server = app.listen(8000, function() {
-  console.log('listening for requests on port 8000');
+const server = app.listen(3000, function() {
+  console.log('listening for requests on port 3000');
 });
 
 const io = socket(server);
@@ -188,11 +188,11 @@ function getUserSession(req, res) {
   console.log(req.session);
 }
 
-const PORT = 3000;
+// const PORT = 3000;
 
-app.listen(PORT, (error) => {
-  if (error) {
-    console.log(error);
-  }
-  console.log('Server is running on the port', PORT);
-});
+// app.listen(PORT, (error) => {
+//   if (error) {
+//     console.log(error);
+//   }
+//   console.log('Server is running on the port', PORT);
+// });
