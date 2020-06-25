@@ -34,7 +34,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
 <script type="application/javascript">
 
-    const socket = io.connect('http://localhost:8000');
+    const socket = io.connect(window.location.protocol + '//' + window.location.host);
 
     let audioPlayer = document.getElementById('audioPlayer'),
             pitchControl = document.getElementById('pitch'),

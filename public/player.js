@@ -1,5 +1,5 @@
 // Make connection
-const socket = io.connect('http://localhost:8000');
+const socket = io.connect(window.location.protocol + '//' + window.location.host);
 
 socket.on('playMusict', function(data) {
   feedback.innerHTML = '';
