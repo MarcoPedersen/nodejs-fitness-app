@@ -1,0 +1,42 @@
+<h1>Edit User</h1>
+
+<form action="/admin/users/update" method="post">
+    <div class="form-group row">
+        <label for="firstName" class="col-sm-2 col-form-label">First name</label>
+        <div class="col-sm-10">
+            <input name="firstName" type="text" class="form-control" id="firstName" value="{{user.firstName}}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="lastName" class="col-sm-2 col-form-label">Last name</label>
+        <div class="col-sm-10">
+            <input name="lastName" type="text" class="form-control" id="lastName" value="{{user.lastName}}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="username" class="col-sm-2 col-form-label">Username</label>
+        <div class="col-sm-10">
+            <input name="username" type="text" class="form-control" id="username" value="{{user.username}}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="email" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+            <input name="email" type="text" class="form-control" id="email" value="{{user.email}}">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="roleId" class="col-sm-2 col-form-label">User role</label>
+        <div class="col-sm-10">
+            <select name="roleId" id="roleId">
+            {{#each roles as | role |}}
+                <!-- Custom handlebar method -->
+                <option value="{{id}}" {{#ifEquals ../user.roleId id}}selected{{/ifEquals}}>{{name}}</option>
+            {{/each}}
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Edit</button>
+    <input type="hidden" name="id" value="{{user.id}}">
+</form>
+

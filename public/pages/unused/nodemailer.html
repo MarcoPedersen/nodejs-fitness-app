@@ -1,0 +1,74 @@
+<!--<div class="container">-->
+<!--    <div class="row">-->
+<!--        <div class="col-sm-12">-->
+<!--            <h1>Nodemailer</h1>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="card">-->
+<!--        <div class="card-body">-->
+<!--            <div class="row">-->
+<!--                    <div class="col-sm-4">-->
+<!--                    <h3>Send an email here</h3>-->
+<!--                        <div id="errorMessage" class="alert alert-danger " role="alert"></div>-->
+<!--                        <div id="successMessage" class="alert alert-success " role="alert"></div>-->
+<!--                    <form id="mailform" method="POST"  action="send">-->
+<!--                        <div class="form-group row">-->
+<!--                        <p>-->
+<!--                            <label class="col-sm-4 col-form-label">Name</label>-->
+<!--                            <input class="col-sm-8" type="text" name="name">-->
+<!--                        </p>-->
+<!--                        <br>-->
+<!--                        <p>-->
+<!--                            <label class="col-sm-4 col-form-label">Email</label>-->
+<!--                            <input class="col-sm-8" type="email" name="email">-->
+<!--                        </p>-->
+<!--                        <br>-->
+<!--                        <p>-->
+<!--                            <label class="col-sm-4 col-form-label">Phone</label>-->
+<!--                            <input class="col-sm-8" type="phone" name="phone">-->
+
+<!--                        </p>-->
+<!--                        <br>-->
+<!--                        <p>-->
+<!--                            <label class="col-sm-4 col-form-label">Subject</label>-->
+<!--                            <input class="col-sm-8" type="text" name="subject">-->
+<!--                        </p>-->
+<!--                        <br>-->
+<!--                        <p class="full">-->
+<!--                            <label class="col-sm-4 col-form-label">Message</label>-->
+<!--                            <textarea class="col-sm-8" type="message" name="message"></textarea>-->
+<!--                        </p>-->
+<!--                        <br>-->
+<!--                        <p class="full">-->
+<!--                            <button type="submit">Submit</button>-->
+<!--                        </p>-->
+<!--                        </div>-->
+<!--                    </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script type="text/javascript">-->
+<!--    $(document).ready(function () {-->
+<!--        $("#errorMessage").hide();-->
+<!--        $("#successMessage").hide();-->
+<!--        $("#mailform").submit(function( event ) {-->
+<!--            var data = $(this).serialize();-->
+<!--            $.ajax({-->
+<!--                type: "POST",-->
+<!--                url: "/send",-->
+<!--                dataType: 'json',-->
+<!--                data: data,-->
+<!--                success: function (data, response) {-->
+<!--                    $("#successMessage").text("The mail has been sent").show();-->
+<!--                }-->
+<!--            }).fail(function(data, response) {-->
+<!--                $("#errorMessage").text("the mail has not been sent").show();-->
+<!--            });-->
+<!--            event.preventDefault();-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+

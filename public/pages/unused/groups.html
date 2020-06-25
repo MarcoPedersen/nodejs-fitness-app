@@ -1,0 +1,25 @@
+<div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">Well done!</h4>
+    <p>Welcome to the groups site</p>
+</div>
+<table id="dtBasicExample" class="tdata table table-striped">
+    <thead>
+    <tr>
+        <th>Gruppenavn</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr each="group : ${user_group}">
+        <td text="${groupname}"></td>
+        <td text="${group.id}"></td>
+        <td>
+            <form action="@{/joinGroup/{id}/{userid}(id=${group.id}, userid=${session.currentuser})}"
+                  object="${group}" method="POST">
+                <input type="hidden" field="${group}">
+                <button type="submit" class="btn btn-primary">Join</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>

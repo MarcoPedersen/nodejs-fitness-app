@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Login</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-4">
+            <form id="loginForm" modelAttribute="login" action="/login" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username">
+
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+        <div class="col-sm-4">
+
+        </div>
+    </div>
+</div>
+<script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js'></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#loginForm").submit(function( event ) {
+            $.ajax({
+                type: "POST",
+                url: "/login",
+                dataType: 'json',
+                data: {
+                    username: $("#username").val() ,
+                    password: $("#password").val()
+                },
+                success: function (data, response) {
+                    window.location.replace("/")
+                }
+            }).fail(function(data, response) {
+                var error  = data.response
+
+                $("#errorMessage").text(error)
+            });
+            event.preventDefault();
+        });
+
+    });
+</script>
