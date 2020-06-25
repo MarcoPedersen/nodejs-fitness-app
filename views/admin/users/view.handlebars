@@ -1,37 +1,42 @@
-<h1>Users</h1>
-<a href="/admin/users/add" > add a new user </a>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h1>Users</h1>
+            <a href="/admin/users/add" > add a new user </a>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First name</th>
+                    <th scope="col">Last name</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each users as | user |}}
+                    <tr>
+                        <th scope="row">{{id}}</th>
+                        <td>{{firstName}}</td>
+                        <td>{{lastName}}</td>
+                        <td>{{username}}</td>
+                        <td>{{email}}</td>
+                        <td>{{role}}</td>
+                        <td><a href="/admin/users/edit/{{id}}"><button type="submit" class="btn btn-primary">Edit</button></a> &nbsp;
+                            <form action="/admin/users/delete" method="post">
+                                <input type="hidden" name="id" value="{{id}}">
+                                <button type="submit" class="btn btn-primary">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-<table class="table table-bordered">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">First name</th>
-        <th scope="col">Last name</th>
-        <th scope="col">Username</th>
-        <th scope="col">Password</th>
-        <th scope="col">Email</th>
-        <th scope="col">Role</th>
-        <th scope="col">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    {{#each users as | user |}}
-        <tr>
-            <th scope="row">{{id}}</th>
-            <td>{{firstName}}</td>
-            <td>{{lastName}}</td>
-            <td>{{username}}</td>
-            <td>{{password}}</td>
-            <td>{{email}}</td>
-            <td>{{role}}</td>
-            <td><a href="/admin/users/edit/{{id}}"><button type="submit" class="btn btn-primary">Edit</button></a> &nbsp;
-                <form action="/admin/users/delete" method="post">
-                    <input type="hidden" name="id" value="{{id}}">
-                    <button type="submit" class="btn btn-primary">Delete</button>
-                </form>
-            </td>
-        </tr>
-    {{/each}}
-    </tbody>
-</table>
+
 

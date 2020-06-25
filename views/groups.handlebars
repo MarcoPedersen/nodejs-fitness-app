@@ -1,21 +1,25 @@
-<div class="alert alert-success" role="alert">
-    <p>Welcome to the groups site</p>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            {{#if showTitle}}
+                <h1> Groups {{role}} </h1>
+            {{/if}}
+
+            <table id="dtBasicExample" class="tdata table table-striped">
+                <tbody>
+                {{#each userGroups as | group |}}
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{id}}</td>
+                        <td>
+                            <a href="/{{../role}}?groupid={{id}}">Join</a>
+                        </td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
-{{#if showTitle}}
-    <h1>Assigned training groups {{role}}</h1>
-{{/if}}
 
-<table id="dtBasicExample" class="tdata table table-striped">
-    <tbody>
-    {{#each userGroups as | group |}}
-        <tr>
-            <td>{{name}}</td>
-            <td>{{id}}</td>
-            <td>
-                    <a href="/{{../role}}?groupid={{id}}">Join</a>
-            </td>
-        </tr>
-    {{/each}}
-    </tbody>
-</table>

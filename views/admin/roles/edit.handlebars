@@ -1,10 +1,16 @@
-<h1>Edit Roles</h1>
-
-<form action="/admin/roles/update" method="post">
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input type="name" name="name"  class="form-control" id="name" value="{{role.name}}">
-        <input type="hidden" name="id" value="{{role.id}}">
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h1>Edit Roles</h1>
+            <form action="/admin/roles/update" method="post">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="name" name="name"  class="form-control" id="name" value="{{role.name}}">
+                    <input type="hidden" name="id" value="{{role.id}}">
+                </div>
+                <button type="submit" class="btn btn-primary">Edit</button>
+            </form>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Edit</button>
-</form>
+</div>
+

@@ -1,0 +1,51 @@
+#header .navbar{
+    background-color: #000000;
+}
+#footer{
+    text-align: center;
+    border-top: 1px solid #cccccc;
+    background-color: #adb6bf80;
+    background-image: url("../images/carbon-footer.png");
+    color: #f8ff8d;
+    padding: 1em;
+}
+#sidebar{
+    background-color: #007bff;
+    padding-top: 10px;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+#sidebar h6 {
+    font-weight: bold;
+}
+
+#sidebar ul.nav > li > a.active, #sidebar ul.nav > li > a:hover {
+    background: #000000;
+    color: white;
+}
+#content{
+    padding-top: 10px;
+}
+
+#mainContent{
+    padding-top: 20px;
+}
+
+pre.code-block{
+    background-color: #ccc;
+}
+
+.nav-link {
+    color: #000000;
+}
+
+input[type=range] {
+    width: 100%;
+    border: none;
+}
+
+.table form {
+    display: inline;
+}
+
+

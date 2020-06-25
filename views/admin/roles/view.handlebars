@@ -1,26 +1,33 @@
-<h1>Groups</h1>
-<a href="/admin/roles/add" > add a new role </a>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <h1>Groups</h1>
+            <a href="/admin/roles/add" > add a new role </a>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each roles as | role |}}
+                    <tr>
+                        <th scope="row">{{id}}</th>
+                        <td>{{name}}</td>
+                        <td><a href="/admin/roles/edit/{{id}}"><button type="submit" class="btn btn-primary">Edit</button></a> &nbsp;
+                            <form action="/admin/roles/delete" method="post">
+                                <input type="hidden" name="id" value="{{id}}">
+                                <button type="submit" class="btn btn-primary">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-<table class="table table-bordered">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-    </tr>
-    </thead>
-    <tbody>
-    {{#each roles as | role |}}
-        <tr>
-            <th scope="row">{{id}}</th>
-            <td>{{name}}</td>
-            <td><a href="/admin/roles/edit/{{id}}"><button type="submit" class="btn btn-primary">Edit</button></a> &nbsp;
-                <form action="/admin/roles/delete" method="post">
-                    <input type="hidden" name="id" value="{{id}}">
-                    <button type="submit" class="btn btn-primary">Delete</button>
-                </form>
-            </td>
-        </tr>
-    {{/each}}
-    </tbody>
-</table>
+
 
