@@ -6,7 +6,7 @@
     </div>
     <div class="row">
         <div class="col-sm-4">
-            <div id="errorMessage"></div>
+            <div id="errorMessage" class="alert alert-danger" role="alert"></div>
             <form id="registerForm">
                 <div class="form-group row">
                     <label for="username" class="col-sm-4 col-form-label">Username</label>
@@ -43,12 +43,13 @@
                 </div>
             </form>
         </div>
-        </div>
     </div>
+</div>
 </div>
 
 <script type="text/javascript">
     $(document).ready(function () {
+      $('#errorMessage').hide();
         $( "#registerForm" ).submit(function( event ) {
             $.ajax({
                 type: "POST",
@@ -57,17 +58,16 @@
                 data: {
                     username: $("#username").val() ,
                     password: $("#password").val() ,
-                    first_name: $("#firstname").val() ,
-                    last_name: $("#lastname").val() ,
+                    firstname: $("#firstName").val() ,
+                    lastname: $("#lastName").val() ,
                     email: $("#email").val()
                 },
                 success: function(data) {
                     window.location.replace("/login");
                 }
             }).fail(function(data, response) {
-                var error  = data.response
-
-                $("#errorMessage").text(error)
+                var error  = data.responseJSON.response;
+                $("#errorMessage").text(error).show();
             });
             event.preventDefault();
         });

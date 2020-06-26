@@ -2,10 +2,6 @@ const router = require('express').Router();
 const User = require('../models/User.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
-const fs = require('fs');
-const header = fs.readFileSync('./public/pages/fragments/header.html', 'utf8');
-const footer = fs.readFileSync('./public/pages/fragments/footer.html', 'utf8');
-const loginPage = fs.readFileSync('./public/pages/login.html', 'utf8');
 const bodyParser = require('body-parser');
 
 router.use(bodyParser.urlencoded({
@@ -15,7 +11,7 @@ router.use(bodyParser.urlencoded({
 router.use(bodyParser.json());
 
 router.get('/login', (req, res) => {
-  return res.send(header + loginPage + footer);
+  return res.render('login');
 });
 
 router.post('/login', (req, res) => {
@@ -44,41 +40,6 @@ router.post('/login', (req, res) => {
     } catch (e) {
       return res.status(500).send({response: 'Something went wrong with the request'});
     }
-  }
-});
-
-
-router.post('/signup', (req, res) => {
-  const {username, password, firstname, lastname, email} = req.body;
-  if (username && password) {
-    if (password.length < 8) {
-      return res.status(400).send({response: 'Password must be 8 characters or longer'});
-    } else {
-      try {
-        User.query().select('username').where('username', username).then((foundUser) => {
-          if (foundUser.length > 0) {
-            return res.status(400).send({response: 'User already exists'});
-          } else {
-            bcrypt.hash(password, saltRounds).then((hashedPassword) => {
-              User.query().insert({
-                username,
-                password: hashedPassword,
-                first_name: firstname,
-                last_name: lastname,
-                email: email,
-                role_id: 1,
-              }).then((createdUser) => {
-                return res.send({response: `The user ${createdUser.username} was created`});
-              });
-            });
-          }
-        });
-      } catch (error) {
-        return res.status(500).send({response: 'Something went wrong with the DB'});
-      }
-    }
-  } else {
-    return res.status(400).send({response: 'username or password missing'});
   }
 });
 

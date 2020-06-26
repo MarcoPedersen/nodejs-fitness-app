@@ -2,10 +2,6 @@ const router = require('express').Router();
 const Group = require('../models/Groups.js');
 const User = require('../models/User.js');
 const Role = require('../models/Roles.js');
-const fs = require('fs');
-const errorPage = fs.readFileSync('./public/pages/403.html', 'utf8');
-const header = fs.readFileSync('./public/pages/fragments/header.html', 'utf8');
-const footer = fs.readFileSync('./public/pages/fragments/footer.html', 'utf8');
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
 
@@ -22,7 +18,7 @@ router.get('/admin/groups', async (req, res) => {
   if (session.username) {
     res.render('admin/groups/view', data);
   } else {
-    return res.send(header + frontPage + footer);
+    show403(res);
   }
 });
 
@@ -34,7 +30,7 @@ router.get('/admin/groups/edit/:groupId', async (req, res) => {
   if (session.username) {
     res.render('admin/groups/edit', {group: group});
   } else {
-    return res.send(header + errorPage + footer);
+    show403(res);
   }
 });
 
@@ -48,7 +44,7 @@ router.post('/admin/groups/update', async (req, res) => {
   if (session.username) {
     redirect(res, '/admin/groups/');
   } else {
-    return res.send(header + errorPage + footer);
+    show403(res);
   }
 });
 
@@ -58,7 +54,7 @@ router.get('/admin/groups/add', async (req, res) => {
   if (session.username) {
     res.render('admin/groups/add');
   } else {
-    return res.send(header + errorPage + footer);
+    show403(res);
   }
 });
 
@@ -72,7 +68,7 @@ router.post('/admin/groups/save', async (req, res) => {
   if (session.username) {
     redirect(res, '/admin/groups/');
   } else {
-    return res.send(header + errorPage + footer);
+    show403(res);
   }
 });
 
@@ -84,7 +80,7 @@ router.post('/admin/groups/delete', async (req, res) => {
   if (session.username) {
     redirect(res, '/admin/groups/');
   } else {
-    return res.send(header + errorPage + footer);
+    show403(res);
   }
 });
 
@@ -104,7 +100,7 @@ router.get('/admin/users', async (req, res) => {
   if (session.username) {
     res.render('admin/users/view', data);
   } else {
-    return res.send(header + errorPage + footer);
+    show403(res);
   }
 });
 
@@ -117,7 +113,7 @@ router.get('/admin/users/add', async (req, res) => {
       roles: roles,
     });
   } else {
-    return res.send(header + errorPage + footer);
+    show403(res);
   }
 });
 
@@ -165,7 +161,7 @@ router.post('/admin/users/update', async (req, res) => {
   if (session.username) {
     redirect(res, '/admin/users/');
   } else {
-    return res.send(header + errorPage + footer);
+    show403(res);
   }
 });
 
@@ -177,7 +173,7 @@ router.post('/admin/users/delete', async (req, res) => {
   if (session.username) {
     redirect(res, '/admin/users/');
   } else {
-    return res.send(header + errorPage + footer);
+    show403(res);
   }
 });
 
@@ -195,7 +191,7 @@ router.get('/admin/roles', async (req, res) => {
   if (session.username) {
     res.render('admin/roles/view', data);
   } else {
-    return res.send(header + errorPage + footer);
+    show403(res);
   }
 });
 
@@ -207,7 +203,7 @@ router.get('/admin/roles/edit/:Id', async (req, res) => {
   if (session.username) {
     res.render('admin/roles/edit', {role: role});
   } else {
-    return res.send(header + errorPage + footer);
+    show403(res);
   }
 });
 
@@ -221,7 +217,7 @@ router.post('/admin/roles/update', async (req, res) => {
   if (session.username) {
     redirect(res, '/admin/roles/');
   } else {
-    return res.send(header + errorPage + footer);
+    show403(res);
   }
 });
 
@@ -231,7 +227,7 @@ router.get('/admin/roles/add', async (req, res) => {
   if (session.username) {
     res.render('admin/roles/add');
   } else {
-    return res.send(header + errorPage + footer);
+    show403(res);
   }
 });
 
@@ -245,7 +241,7 @@ router.post('/admin/roles/save', async (req, res) => {
   if (session.username) {
     redirect(res, '/admin/roles/');
   } else {
-    return res.send(header + errorPage + footer);
+    show403(res);
   }
 });
 
@@ -257,7 +253,7 @@ router.post('/admin/roles/delete', async (req, res) => {
   if (session.username) {
     redirect(res, '/admin/roles/');
   } else {
-    return res.send(header + errorPage + footer);
+    show403(res);
   }
 });
 
@@ -268,5 +264,8 @@ function redirect(response, url) {
   response.end();
 }
 
+function show403(res) {
+  return res.render('errors/403');
+}
 
 module.exports = router;
