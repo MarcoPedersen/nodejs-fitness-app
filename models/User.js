@@ -1,5 +1,6 @@
 const {Model} = require('objection');
 const Group = require('./Groups.js');
+const Usergroup = require('./Usergroup.js');
 
 class User extends Model {
     static tableName = 'users';
@@ -15,6 +16,14 @@ class User extends Model {
                     to: 'user_groups.group_id'
                 },
                 to: 'groups.id'
+            }
+        },
+        userGroups: {
+            relation: Model.HasManyRelation,
+            modelClass: Usergroup,
+            join: {
+                from: 'users.id',
+                to: 'user_groups.user_id'
             }
         }
     }

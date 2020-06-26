@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Group = require('../models/Groups.js');
+const UserGroup = require('../models/Usergroup.js');
 const User = require('../models/User.js');
 const Role = require('../models/Roles.js');
 const bcrypt = require('bcrypt');
@@ -139,9 +140,11 @@ router.get('/admin/users/edit/:userId', async (req, res) => {
   const {userId} = req.params;
   const user = await User.query().findById(userId);
   const roles = await Role.query();
+  const groups = await Group.query();
   res.render('admin/users/edit', {
     user: user,
     roles: roles,
+    groups: groups,
     helpers: {
       ifEquals: function(arg1, arg2, options) {
         return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
@@ -153,10 +156,27 @@ router.get('/admin/users/edit/:userId', async (req, res) => {
 
 // save edited user changes to DB
 router.post('/admin/users/update', async (req, res) => {
-  const {id} = req.body;
+  const {firstName, lastName, username, email, roleId, groups, id} = req.body;
   const numberOfAffectedRows = await User.query()
-      .update(req.body)
+      .update({
+        firstName: firstName,
+        lastName: lastName,
+        username: username,
+        email: email,
+        roleId: roleId,
+      })
       .where('id', id);
+  const user = await User.query().findById(id);
+  let i;
+  for (i = 0; i < groups.length; i++) {
+    const group = await user
+        .$relatedQuery('userGroups')
+        .where('groupId', groups[i]);
+    if ( group.length == 0 || group === undefined) {
+      await user.$relatedQuery('userGroups').insert({groupId: groups[i]}).debug();
+    }
+  }
+
   session = req.session;
   if (session.username) {
     redirect(res, '/admin/users/');
