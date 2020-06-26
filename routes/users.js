@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const User = require('../models/User.js');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
+const saltRounds = 12;
 
 router.use(bodyParser.urlencoded({
   'extended': true,
