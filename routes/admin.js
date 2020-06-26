@@ -3,6 +3,7 @@ const Group = require('../models/Groups.js');
 const UserGroup = require('../models/Usergroup.js');
 const User = require('../models/User.js');
 const Role = require('../models/Roles.js');
+const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
 
@@ -141,13 +142,18 @@ router.get('/admin/users/edit/:userId', async (req, res) => {
   const user = await User.query().findById(userId);
   const roles = await Role.query();
   const groups = await Group.query();
+  const userGroups = await user.$relatedQuery('userGroups');
   res.render('admin/users/edit', {
     user: user,
     roles: roles,
     groups: groups,
+    userGroups: userGroups,
     helpers: {
       ifEquals: function(arg1, arg2, options) {
         return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+      },
+      ifInArray: function(haystack, needle, options) {
+        return (_.find(haystack, {groupId: needle})) ? options.fn(this) : options.inverse(this);
       },
     },
   },
@@ -166,17 +172,16 @@ router.post('/admin/users/update', async (req, res) => {
         roleId: roleId,
       })
       .where('id', id);
-  const user = await User.query().findById(id);
-  let i;
-  for (i = 0; i < groups.length; i++) {
-    const group = await user
-        .$relatedQuery('userGroups')
-        .where('groupId', groups[i]);
-    if ( group.length == 0 || group === undefined) {
-      await user.$relatedQuery('userGroups').insert({groupId: groups[i]}).debug();
-    }
-  }
-
+  // let i;
+  // for (i = 0; i < groups.length; i++) {
+  //   const group = await user
+  //       .$relatedQuery('userGroups')
+  //       .where('groupId', groups[i]);
+  //   if ( group.length == 0 || group === undefined) {
+  //     await user.$relatedQuery('userGroups').insert({groupId: groups[i]}).debug();
+  //   }
+  // }
+  assignUsergroups(id, groups);
   session = req.session;
   if (session.username) {
     redirect(res, '/admin/users/');
@@ -276,6 +281,23 @@ router.post('/admin/roles/delete', async (req, res) => {
     show403(res);
   }
 });
+
+async function assignUsergroups(userId, selectedGroups) {
+  const groups = await Group.query();
+  const user = await User.query().findById(userId);
+  let i;
+  for (i = 0; i < groups.length; i++) {
+    const {id} = groups[i];
+    const group = await user.$relatedQuery('userGroups').where('groupId', id);
+    if (selectedGroups.includes(id.toString())) {
+      if ( group.length == 0 || group === undefined) {
+        await user.$relatedQuery('userGroups').insert({groupId: id});
+      }
+    } else {
+      await User.relatedQuery('userGroups').for(user).unrelate().where('groupId', id);
+    }
+  }
+}
 
 function redirect(response, url) {
   response.writeHead(302, {
