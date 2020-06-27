@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const User = require('../models/User.js');
 const bcrypt = require('bcrypt');
-const saltRounds = 12;
 const bodyParser = require('body-parser');
 
 router.use(bodyParser.urlencoded({
@@ -58,6 +57,5 @@ function isValid(username, password) {
   }
   return false;
 }
-
 
 module.exports = router;

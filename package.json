@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "start": "node app.js",
-    "createdb": "knex migrate:rollback && knex migrate:latest && knex seed:run",
+    "resetdb": "knex migrate:rollback && knex migrate:latest && knex seed:run",
     "migrate:latest": "knex migrate:latest",
     "migrate:make": "knex migrate:make",
     "migrate:rollback": "knex migrate:rollback",

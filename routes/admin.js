@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const Group = require('../models/Groups.js');
-const UserGroup = require('../models/Usergroup.js');
 const User = require('../models/User.js');
 const Role = require('../models/Roles.js');
 const _ = require('lodash');
@@ -10,6 +9,7 @@ const saltRounds = 12;
 /*
 GROUPS
  */
+
 // show groups
 router.get('/admin/groups', async (req, res) => {
   const groups = await Group.query();
@@ -172,15 +172,6 @@ router.post('/admin/users/update', async (req, res) => {
         roleId: roleId,
       })
       .where('id', id);
-  // let i;
-  // for (i = 0; i < groups.length; i++) {
-  //   const group = await user
-  //       .$relatedQuery('userGroups')
-  //       .where('groupId', groups[i]);
-  //   if ( group.length == 0 || group === undefined) {
-  //     await user.$relatedQuery('userGroups').insert({groupId: groups[i]}).debug();
-  //   }
-  // }
   assignUsergroups(id, groups);
   session = req.session;
   if (session.username) {

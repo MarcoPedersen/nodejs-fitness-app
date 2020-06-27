@@ -22,6 +22,8 @@ router.get('/groups', async (req, res) => {
     case 3:
       role = 'member';
       break;
+    default:
+      role = 'member';
   }
   const user = await User.query().findById(session.user_id);
   let groups = await user

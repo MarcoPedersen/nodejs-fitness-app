@@ -100,7 +100,6 @@ io.on('connection', (socket) => {
   socket.on('musicSessionAlive', function(data) {
     io.sockets.emit('musicSessionAlive', data);
   });
-
   // disconnect handler
   socket.on('disconnect', function() {
     const membersToDisconnect = getMembersToDisconnect(socket.id);

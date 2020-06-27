@@ -30,7 +30,6 @@ exports.up = function(knex) {
         table.integer('group_id').notNullable();
       });
 };
-
 exports.down = function(knex) {
   return knex.schema
       .dropTableIfExists('user_groups')

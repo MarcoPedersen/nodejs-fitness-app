@@ -1,79 +1,76 @@
-
 const socket = io.connect(window.location.protocol + '//' + window.location.host);
+const audioPlayer = document.getElementById('audioPlayer');
+const pitchControl = document.getElementById('pitch');
+const progressControl = document.getElementById('progress');
+const playBtn = $('#playBtn');
+const groupId = $('#groupId').val();
 
-let audioPlayer = document.getElementById('audioPlayer'),
-  pitchControl = document.getElementById('pitch'),
-  progressControl = document.getElementById('progress'),
-  isMusicPlaying = false,
-  playBtn = $('#playBtn'),
-  groupId = $("#groupId").val();
-
-$('#playBtn').click(function () {
-  playBtn.val('Synched')
-  socket.emit('startStream', groupId)
+$('#playBtn').click(function() {
+  playBtn.val('Synched');
+  socket.emit('startStream', groupId);
 });
 
 // SOCKET EVENT LISTENERS
 socket.on('connect', function() {
   const sessionID = socket.id;
-  let groupSession = {
-    "groupId": groupId,
-    "socketId": sessionID,
-  }
+  const groupSession = {
+    'groupId': groupId,
+    'socketId': sessionID,
+  };
   socket.emit('startTrainingSession', groupSession);
 });
 
-socket.on('streamMusic', function (data) {
-  if(playBtn.val() != 'notSynched' ) {
+socket.on('streamMusic', function(data) {
+  if (playBtn.val() != 'notSynched' ) {
     playMusic(data.src, data.name, data.time_stamp, data.pitch);
   }
 });
 
-socket.on('musicSessionAlive', function (data) {
+socket.on('musicSessionAlive', function(data) {
   if (data != true) {
-    stopSong()
+    stopSong();
   }
 });
 
-socket.on('stopMusicStream', function (data) {
+socket.on('stopMusicStream', function(data) {
   alert('Instructor closed the session');
-  stopSong()
+  stopSong();
 });
 
-socket.on('changePlaybackTime', function (playbackTime) {
-  changeProgress(playbackTime)
+socket.on('changePlaybackTime', function(playbackTime) {
+  changeProgress(playbackTime);
 });
 
-socket.on('changePitch', function (pitch) {
-  changePitch(pitch)
-  updatePitch(pitch)
+socket.on('changePitch', function(pitch) {
+  changePitch(pitch);
+  updatePitch(pitch);
 });
 
-socket.on('noSessionFound', function () {
+socket.on('noSessionFound', function() {
   alert('No active session for this group');
 });
 
 function updatePitch(pitch = null) {
-  pitchControl.value = audioPlayer.playbackRate
-  pitchControl.textContent = (pitch.value * 100).toFixed(0) + " %"
+  pitchControl.value = audioPlayer.playbackRate;
+  pitchControl.textContent = (pitch.value * 100).toFixed(0) + ' %';
 }
 
 function changePitch(pitch = null) {
-  audioPlayer.playbackRate = (pitch ? pitch : pitchControl.value)
+  audioPlayer.playbackRate = (pitch ? pitch : pitchControl.value);
 }
 
 function changeProgress(playbackTime = null) {
-  audioPlayer.currentTime = (playbackTime ? playbackTime : progressControl.value)
+  audioPlayer.currentTime = (playbackTime ? playbackTime : progressControl.value);
 }
 
 function playMusic(src, name, time_stamp, pitch) {
-  const musicPlayer = $("#audioPlayer");
+  const musicPlayer = $('#audioPlayer');
   if (audioPlayer.src != src) {
     musicPlayer.attr('src', src);
   }
   musicPlayer.attr('time_stamp', time_stamp);
   musicPlayer.attr('pitch', pitch);
-  audioPlayer.play()
+  audioPlayer.play();
 }
 
 function stopSong() {
@@ -82,39 +79,38 @@ function stopSong() {
 };
 
 /* Adds Play and Pause button */
-var playing = true
+let playing = true;
 function playPause() {
-  const pp = document.querySelector('#play-pause'),
-    song = audioPlayer
+  const pp = document.querySelector('#play-pause');
+  const song = audioPlayer;
   if (playing) {
-    pp.textContent = "Pause"
-    song.play()
-    playing = false
+    pp.textContent = 'Pause';
+    song.play();
+    playing = false;
   } else {
-    pp.innerHTML = "Play"
-    song.pause()
-    playing = true
+    pp.innerHTML = 'Play';
+    song.pause();
+    playing = true;
   }
 }
 
 /* Update and Change audio progress. Adds audio progress controls */
 function updateProgress(playbackTime) {
-  const progress = document.querySelector('#progress')
-  progress.max = audioPlayer.duration
-  progress.value = audioPlayer.currentTime
+  const progress = document.querySelector('#progress');
+  progress.max = audioPlayer.duration;
+  progress.value = audioPlayer.currentTime;
 }
 
-setInterval(updateProgress, 1000)
+setInterval(updateProgress, 1000);
 
 /* Update and Change volume. Adds volume controls */
 function updateVolume() {
-  const volume = document.querySelector('#volume')
-  volume.value = audioPlayer.volume
+  const volume = document.querySelector('#volume');
+  volume.value = audioPlayer.volume;
 }
 
-setInterval(updateVolume, 1000)
+setInterval(updateVolume, 1000);
 
 function changeVolume() {
-  const song = audioPlayer
-  song.volume = document.querySelector('#volume').value
+  audioPlayer.volume = document.querySelector('#volume').value;
 }
