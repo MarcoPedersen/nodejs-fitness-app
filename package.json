@@ -5,8 +5,7 @@
   "main": "app.js",
   "scripts": {
     "lint": "eslint .",
-    "start": "node app.js set PORT=80",
-    "start-dev": "nodemon app.js set PORT=80",
+    "start": "node app.js",
     "createdb": "knex migrate:rollback && knex migrate:latest && knex seed:run",
     "migrate:latest": "knex migrate:latest",
     "migrate:make": "knex migrate:make",
