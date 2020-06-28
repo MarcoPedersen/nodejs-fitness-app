@@ -1,5 +1,6 @@
 const {Model} = require('objection');
 const Group = require('./Groups.js');
+const Roles = require('./Roles.js');
 const Usergroup = require('./Usergroup.js');
 
 class User extends Model {
@@ -24,6 +25,14 @@ class User extends Model {
             join: {
                 from: 'users.id',
                 to: 'user_groups.user_id'
+            }
+        },
+        role: {
+            relation: Model.BelongsToOneRelation,
+            modelClass: Roles,
+            join: {
+                from: 'users.role_id',
+                to: 'roles.id'
             }
         }
     }

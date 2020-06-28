@@ -53,7 +53,7 @@ const groupsRoute = require('./routes/groups.js');
 const instructorRoute = require('./routes/instructor.js');
 const memberRoute = require('./routes/member.js');
 const adminRoute = require('./routes/admin.js');
-const profileRoute = require('./routes/profile.js');
+const profileRoute = require('./routes/test.js');
 
 app.use(authRoute);
 app.use(usersRoute);
