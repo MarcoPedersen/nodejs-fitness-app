@@ -53,6 +53,7 @@ const groupsRoute = require('./routes/groups.js');
 const instructorRoute = require('./routes/instructor.js');
 const memberRoute = require('./routes/member.js');
 const adminRoute = require('./routes/admin.js');
+const profileRoute = require('./routes/profile.js');
 
 app.use(authRoute);
 app.use(usersRoute);
@@ -61,6 +62,7 @@ app.use(groupsRoute);
 app.use(instructorRoute);
 app.use(memberRoute);
 app.use(adminRoute);
+app.use(profileRoute);
 
 const server = app.listen(3000, function() {
   console.log('listening for requests on port 3000');
@@ -183,15 +185,7 @@ function joinMusicSession(data) {
   }
 }
 
+//good to have
 function getUserSession(req, res) {
   console.log(req.session);
 }
-
-// const PORT = 3000;
-
-// app.listen(PORT, (error) => {
-//   if (error) {
-//     console.log(error);
-//   }
-//   console.log('Server is running on the port', PORT);
-// });

@@ -7,7 +7,7 @@ class User extends Model {
 
     static relationMappings = {
         groups: {
-            relation: Model.HasOneThroughRelation,
+            relation: Model.ManyToManyRelation,
             modelClass: Group,
             join: {
                 from: 'users.id',
